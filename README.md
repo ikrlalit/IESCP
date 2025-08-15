@@ -1,44 +1,159 @@
+# IESCP V2 - Influencer Engagement & Sponsorship Coordination Platform
 
-# IESCP V2
+The Influencer Engagement & Sponsorship Coordination Platform (IESCP) V2 is a multi-user web application designed to connect influencers and sponsors. It enables influencers to explore ad campaigns and sponsors to create and manage campaigns and ad requests, facilitating seamless collaboration.
 
-The Influencer Engagement & Sponsorship Coordination Platform - V2 is a multi-user web application that allows influencers to explore ad campaigns and sponsors to create new campaigns and ad requests to influencers.
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [API Design](#api-design)
+- [Prerequisites](#prerequisites)
+- [Installation and Setup](#installation-and-setup)
+- [Running the Application](#running-the-application)
 
-## Technologies Used:
- * Python – Python is the primary programming language used for developing app
- * Flask – Used for backend application and APIs
- * SQLite- Serves as the database for the application
- * VueJS – Used for creating frontend of the application
- * Jinja2 – Used for displaying data dynamically in HTML pages
- * Bootstrap – It is a CSS framework, we used for making pages visually appealing
- * Redis – For caching and backend for celery 
- * Celery and Celery beat – To perform async task and schedule task for automatic execution
- * Mailhog – For setting and demonstrating mailing service on local system
-## API Design:
-The APIs are designed using Flask-Restful for performing CRUD on User,Influencer Profile, Sponsor Profile, Campaigns, Adrequests, etc We used the flask-jwt-extended package for implementing authentication and authorization on API endpoints. 
+## Overview
+IESCP V2 is a robust platform that streamlines interactions between influencers, sponsors, and administrators. Influencers can discover and negotiate ad campaigns, sponsors can manage campaigns and communicate with influencers, and administrators can oversee platform activities and ensure smooth operations.
 
-## Architecture and Features:
-The application follows the standard MVC architecture. The frontend of the application is created using using vuejs 3.  The APIs are created using Python and Flask Restful. Models are the Python classes that map with SQLite database tables using the Flask-SQLAlchemy ORM library.
-The features of the application are as follows-
-* Signup and Login for influencer, sponsor and Admin
-* An admin can view, approve new sponsor accounts, block any suspicious activity, and can monitor the applications statistics 
-* A Influencer can view, search new campaign and adrequests from sponsors. They can negotiate on a request and chat with sponsors.
-* Sponsors can create, update,read,delete new campaign and adrequests they can chat with influencers.
-* We used caching to increase the performance of APIs
-* We are using celery to offload backend heavy tasks and celery beat for scheduling mails and remainders 
+## Features
+- **User Authentication**: Secure signup and login for influencers, sponsors, and administrators.
+- **Admin Dashboard**: Admins can approve sponsor accounts, monitor platform statistics, and block suspicious activities.
+- **Influencer Tools**: Influencers can browse, search, and negotiate campaigns and ad requests, as well as chat with sponsors.
+- **Sponsor Capabilities**: Sponsors can create, read, update, and delete campaigns and ad requests, and communicate with influencers.
+- **Performance Optimization**: Caching with Redis to enhance API performance.
+- **Asynchronous Processing**: Celery for handling heavy backend tasks and Celery Beat for scheduling automated emails and reminders.
 
-## Instructions to Run the Application
-* Download and extract the project directory
-* Change directory to backend inside the project and setup virtual environment
-* Use ```python3 -m venv .venv``` to create the virtual environment
-* Once created use ```source .venv/bin/activate``` this will activate virutal environment
-* Next execute the ```pip install -r requirements.txt``` this will install all the packages required for running the application
-* Finally run the app using ```python app.py``` to run the flask server
-* Open another terminal and change directory to frontend which is inside the main project folder
-* Run ``` npm install``` to install the required packages
-* Next run ```npm run serve``` to start the server
-* Open another terminal and change directory to backend and then use ``` celery -A app:celery_app worker --loglevel INFO ``` to run the celery worker
-* Now run the celery beat with ``` celery -A app:celery_app beat --loglevel INFO ```
-* Make sure redis server is installed and running on your local system
-* To setup SMTP server on local system you can install and use Mailhog. Use ```~/go/bin/MailHog ```
+## Technologies Used
+- **Python**: Core programming language for backend development.
+- **Flask**: Framework for building the backend and RESTful APIs.
+- **SQLite**: Lightweight database for storing application data.
+- **Vue.js 3**: Frontend framework for creating dynamic user interfaces.
+- **Jinja2**: Templating engine for rendering dynamic HTML content.
+- **Bootstrap**: CSS framework for responsive and visually appealing designs.
+- **Redis**: In-memory data store for caching and Celery backend.
+- **Celery & Celery Beat**: Tools for asynchronous task processing and task scheduling.
+- **MailHog**: Local SMTP server for testing email functionality.
+- **Flask-RESTful**: Extension for building REST APIs.
+- **Flask-SQLAlchemy**: ORM for database interactions.
+- **Flask-JWT-Extended**: Authentication and authorization for API endpoints.
 
+## Architecture
+IESCP V2 follows the **Model-View-Controller (MVC)** architecture:
+- **Model**: Python classes mapped to SQLite database tables using Flask-SQLAlchemy.
+- **View**: Frontend built with Vue.js 3, enhanced with Bootstrap for responsive design.
+- **Controller**: Flask-based backend handling API requests and business logic.
+
+The application leverages Redis for caching to improve performance and Celery for asynchronous task execution, ensuring scalability and responsiveness.
+
+## Project Structure
+```
+IESCP/
+├── backend/                # Flask backend code
+│   ├── app.py             # Main Flask application
+│   ├── requirements.txt   # Backend dependencies
+│   └── ...                # Other backend files (models, routes, etc.)
+├── frontend/               # Vue.js frontend code
+│   ├── package.json       # Frontend dependencies
+│   ├── src/               # Vue.js source files
+│   └── ...                # Other frontend files
+├── README.md              # Project documentation
+└── ...                    # Additional configuration files
+```
+
+## API Design
+The APIs are built using **Flask-RESTful** to perform CRUD (Create, Read, Update, Delete) operations on resources such as:
+- Users
+- Influencer Profiles
+- Sponsor Profiles
+- Campaigns
+- Ad Requests
+
+Authentication and authorization are implemented using **Flask-JWT-Extended**, ensuring secure access to API endpoints. APIs are designed to be RESTful, with clear endpoints and standardized response formats.
+
+## Prerequisites
+Before setting up the project, ensure you have the following installed:
+- **Python 3.8+**: For backend development.
+- **Node.js 14+ and npm**: For frontend development.
+- **Redis**: For caching and Celery backend.
+- **MailHog**: For local email testing.
+- **Git**: For cloning the repository.
+
+## Installation and Setup
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/ikrlalit/IESCP.git
+   cd IESCP
+   cd IESCP
+   ```
+
+2. **Backend Setup**:
+   - Navigate to the `backend` directory:
+     ```bash
+     cd backend
+     ```
+   - Create and activate a virtual environment:
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+     ```
+   - Install backend dependencies:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+3. **Frontend Setup**:
+   - Navigate to the `frontend` directory:
+     ```bash
+     cd ../frontend
+     ```
+   - Install frontend dependencies:
+     ```bash
+     npm install
+     ```
+
+4. **Install Redis**:
+   - Follow the official Redis installation guide for your operating system: [Redis Installation](https://redis.io/docs/install/install-redis/).
+   - Ensure the Redis server is running:
+     ```bash
+     redis-server
+     ```
+
+5. **Install MailHog**:
+   - Download and install MailHog: [MailHog Installation](https://github.com/mailhog/MailHog).
+   - Start MailHog:
+     ```bash
+     ~/go/bin/MailHog
+     ```
+
+## Running the Application
+1. **Start the Flask Backend**:
+   - In the `backend` directory, with the virtual environment activated:
+     ```bash
+     python app.py
+     ```
+   - The Flask server will run on `http://localhost:5000` (or as configured).
+
+2. **Start the Vue.js Frontend**:
+   - In the `frontend` directory:
+     ```bash
+     npm run serve
+     ```
+   - The frontend will be available at `http://localhost:8080` (or as configured).
+
+3. **Start Celery Worker**:
+   - In a new terminal, navigate to the `backend` directory and activate the virtual environment:
+     ```bash
+     celery -A app:celery_app worker --loglevel INFO
+     ```
+
+4. **Start Celery Beat**:
+   - In another terminal, navigate to the `backend` directory:
+     ```bash
+     celery -A app:celery_app beat --loglevel INFO
+     ```
+
+5. **Access the Application**:
+   - Open `http://localhost:8080` in your browser to interact with the application.
+   - Use MailHog’s web interface (`http://localhost:8025`) to view emails sent during testing.
 
